@@ -1,0 +1,38 @@
+{
+  "name": "astro-calc",
+  "version": "0.1.0",
+  "description": "API REST para cálculos astrológicos de alta precisão",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "tsx watch src/app.ts",
+    "build": "tsc",
+    "start": "node dist/app.js",
+    "lint": "eslint src test",
+    "format": "prettier --write src test",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "fastify": "^5.2.1",
+    "fastify-type-provider-zod": "^4.0.2",
+    "luxon": "^3.5.0",
+    "sweph": "2.10.3-5",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.18.0",
+    "@types/luxon": "^3.4.2",
+    "@types/node": "^22.10.7",
+    "eslint": "^9.18.0",
+    "eslint-config-prettier": "^10.0.1",
+    "prettier": "^3.4.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.20.0",
+    "vitest": "^3.0.2"
+  },
+  "license": "AGPL-3.0-or-later"
+}

@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.env
+ephe/*.se1
+ephe/*.se
+*.log
+.git/
+test/
+*.md
