@@ -22,6 +22,22 @@ cp .env.example .env
 
 O `.env` padrão funciona sem nenhuma alteração — a API usa o modo Moshier (sem arquivos de efeméride externos).
 
+### Arquivos de efeméride (necessário para o Quíron)
+
+Para habilitar o **Quíron** e a precisão máxima de planetas/Lua, baixe os arquivos do Swiss Ephemeris:
+
+```bash
+npm run ephe:download
+```
+
+Isso baixa `sepl_18.se1`, `semo_18.se1` e `seas_18.se1` (cobertura 1800–2399) para a pasta `ephe/`. Em seguida, ative no `.env`:
+
+```
+EPHE_PATH=./ephe
+```
+
+Sem isso, a API roda em modo Moshier e a resposta sai **sem** o Quíron (os demais corpos funcionam normalmente).
+
 ### Iniciar em modo desenvolvimento (hot reload)
 
 ```bash
@@ -167,6 +183,8 @@ Toda resposta inclui o bloco `timeResolution` indicando o que foi aplicado:
 > **Validação:** compare o signo e grau do Sol, Lua e Ascendente com o resultado em [astro.com/horoscopes/natal](https://www.astro.com/cgi/chart.cgi). A diferença esperada em modo Moshier é < 1°.
 
 > **Lilith:** o array `planets` inclui `lilith` — a Lua Negra Lilith **média** (apogeu lunar médio, `SE_MEAN_APOG`), a mais usada na astrologia ocidental. Ela recebe signo, casa e aspectos como os demais corpos. Por ser o apogeu médio, seu movimento é sempre direto (`retrograde: false`).
+
+> **Quíron:** o array `planets` inclui `chiron` **quando os arquivos de efeméride estão presentes**. Diferente dos demais corpos, o Quíron é um asteroide/centauro e **não** existe no modo Moshier — ele exige o arquivo `seas_18.se1`. Sem o arquivo, o mapa continua funcionando normalmente, apenas **sem** o Quíron na resposta. Para habilitá-lo, baixe os arquivos (ver abaixo) e defina `EPHE_PATH`.
 
 **Forçando o horário de verão** (quando o usuário tem certeza):
 

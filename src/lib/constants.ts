@@ -12,12 +12,14 @@ export const PLANET_IDS = {
   pluto: 9,
   // Lua Negra Lilith média (apogeu lunar médio) — ponto calculado, não um planeta
   lilith: 12,
+  // Quíron — asteroide/centauro; EXIGE o arquivo de efeméride seas_18.se1
+  chiron: 15,
 } as const;
 
 export type PlanetName = keyof typeof PLANET_IDS;
 
-// Corpos e pontos calculados no MVP
-export const MVP_PLANETS: PlanetName[] = [
+// Corpos disponíveis no modo Moshier (sem arquivos de efeméride externos)
+export const CORE_BODIES: PlanetName[] = [
   'sun',
   'moon',
   'mercury',
@@ -30,6 +32,13 @@ export const MVP_PLANETS: PlanetName[] = [
   'pluto',
   'lilith',
 ];
+
+// Corpos que exigem arquivos de efeméride de asteroides (seas_18.se1).
+// Calculados quando o arquivo está presente; omitidos com elegância quando não.
+export const OPTIONAL_BODIES: PlanetName[] = ['chiron'];
+
+// Todos os corpos que podem aparecer na resposta
+export const ALL_BODIES: PlanetName[] = [...CORE_BODIES, ...OPTIONAL_BODIES];
 
 // Flags de cálculo da Swiss Ephemeris
 export const SEFLG_MOSEPH = 4; // modo Moshier (sem arquivos .se1)

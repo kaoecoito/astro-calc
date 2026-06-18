@@ -1,7 +1,7 @@
 import { z } from 'zod';
-import { SIGNS, HOUSE_SYSTEMS, ASPECTS, MVP_PLANETS } from '../lib/constants.js';
+import { SIGNS, HOUSE_SYSTEMS, ASPECTS, ALL_BODIES } from '../lib/constants.js';
 
-const planetNameSchema = z.enum(MVP_PLANETS as [string, ...string[]]);
+const planetNameSchema = z.enum(ALL_BODIES as [string, ...string[]]);
 const signSchema = z.enum(SIGNS);
 const houseSystemSchema = z.enum(Object.keys(HOUSE_SYSTEMS) as [string, ...string[]]);
 const aspectNameSchema = z.enum(ASPECTS.map((a) => a.name) as [string, ...string[]]);
