@@ -129,6 +129,14 @@ Toda resposta inclui o bloco `timeResolution` indicando o que foi aplicado:
       "longitude": 222.5,
       "house": 3,
       "retrograde": false
+    },
+    {
+      "name": "lilith",
+      "sign": "scorpio",
+      "degree": 24.98,
+      "longitude": 234.98,
+      "house": 1,
+      "retrograde": false
     }
   ],
   "houses": {
@@ -157,6 +165,8 @@ Toda resposta inclui o bloco `timeResolution` indicando o que foi aplicado:
 ```
 
 > **Validação:** compare o signo e grau do Sol, Lua e Ascendente com o resultado em [astro.com/horoscopes/natal](https://www.astro.com/cgi/chart.cgi). A diferença esperada em modo Moshier é < 1°.
+
+> **Lilith:** o array `planets` inclui `lilith` — a Lua Negra Lilith **média** (apogeu lunar médio, `SE_MEAN_APOG`), a mais usada na astrologia ocidental. Ela recebe signo, casa e aspectos como os demais corpos. Por ser o apogeu médio, seu movimento é sempre direto (`retrograde: false`).
 
 **Forçando o horário de verão** (quando o usuário tem certeza):
 

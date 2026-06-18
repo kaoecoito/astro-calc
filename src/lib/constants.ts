@@ -1,4 +1,4 @@
-// IDs dos planetas conforme Swiss Ephemeris
+// IDs dos corpos/pontos conforme Swiss Ephemeris
 export const PLANET_IDS = {
   sun: 0,
   moon: 1,
@@ -10,11 +10,13 @@ export const PLANET_IDS = {
   uranus: 7,
   neptune: 8,
   pluto: 9,
+  // Lua Negra Lilith média (apogeu lunar médio) — ponto calculado, não um planeta
+  lilith: 12,
 } as const;
 
 export type PlanetName = keyof typeof PLANET_IDS;
 
-// Planetas calculados no MVP
+// Corpos e pontos calculados no MVP
 export const MVP_PLANETS: PlanetName[] = [
   'sun',
   'moon',
@@ -26,6 +28,7 @@ export const MVP_PLANETS: PlanetName[] = [
   'uranus',
   'neptune',
   'pluto',
+  'lilith',
 ];
 
 // Flags de cálculo da Swiss Ephemeris
