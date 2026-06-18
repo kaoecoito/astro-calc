@@ -15,11 +15,18 @@ export const PlanetPositionSchema = z.object({
   retrograde: z.boolean(),
 });
 
+// Ponto do zodíaco já resolvido em signo + grau
+export const SignPositionSchema = z.object({
+  longitude: z.number(),
+  sign: signSchema,
+  degree: z.number(),
+});
+
 export const HouseDataSchema = z.object({
   system: houseSystemSchema,
   cusps: z.array(z.number()).length(12), // índices 0–11 = casas 1–12
-  ascendant: z.number(),
-  midheaven: z.number(),
+  ascendant: SignPositionSchema,
+  midheaven: SignPositionSchema,
 });
 
 export const AspectSchema = z.object({

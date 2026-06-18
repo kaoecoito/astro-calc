@@ -9,11 +9,18 @@ export interface PlanetPosition {
   retrograde: boolean;
 }
 
+// Ponto do zodíaco já resolvido em signo + grau (evita cálculo no consumidor)
+export interface SignPosition {
+  longitude: number;
+  sign: ZodiacSign;
+  degree: number;
+}
+
 export interface HouseData {
   system: HouseSystem;
   cusps: number[]; // [cusp1, ..., cusp12] — 12 elementos, índice 0 = casa 1
-  ascendant: number;
-  midheaven: number;
+  ascendant: SignPosition;
+  midheaven: SignPosition;
 }
 
 export interface Aspect {

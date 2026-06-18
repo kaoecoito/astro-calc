@@ -1,8 +1,8 @@
 import { houses } from 'sweph';
-import { HOUSE_SYSTEMS } from '../lib/constants.js';
+import { HOUSE_SYSTEMS, signFromLongitude } from '../lib/constants.js';
 import type { HouseSystem } from '../lib/constants.js';
 import { EphemerisError } from '../lib/types.js';
-import type { HouseData } from '../lib/types.js';
+import type { HouseData, SignPosition } from '../lib/types.js';
 
 // Índices do array points retornado por sweph.houses()
 const POINTS = { ascendant: 0, mc: 1 };
@@ -26,9 +26,15 @@ export function computeHouses(
   return {
     system,
     cusps: result.data.houses, // 12 elementos, 0-indexed
-    ascendant: result.data.points[POINTS.ascendant],
-    midheaven: result.data.points[POINTS.mc],
+    ascendant: toSignPosition(result.data.points[POINTS.ascendant]),
+    midheaven: toSignPosition(result.data.points[POINTS.mc]),
   };
+}
+
+// Resolve uma longitude eclíptica em signo + grau dentro do signo
+function toSignPosition(longitude: number): SignPosition {
+  const { sign, degree } = signFromLongitude(longitude);
+  return { longitude, sign, degree };
 }
 
 // Determina em qual casa (1–12) cai uma longitude eclíptica

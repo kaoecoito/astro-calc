@@ -158,8 +158,8 @@ Toda resposta inclui o bloco `timeResolution` indicando o que foi aplicado:
   "houses": {
     "system": "placidus",
     "cusps": [327.14, 354.02, 24.24, 56.14, 87.66, 118.0, 147.14, 174.02, 204.24, 236.14, 267.66, 298.0],
-    "ascendant": 327.14,
-    "midheaven": 236.14
+    "ascendant": { "longitude": 327.14, "sign": "aquarius", "degree": 27.14 },
+    "midheaven": { "longitude": 236.14, "sign": "scorpio", "degree": 26.14 }
   },
   "aspects": [
     {
@@ -179,6 +179,8 @@ Toda resposta inclui o bloco `timeResolution` indicando o que foi aplicado:
   }
 }
 ```
+
+> **Ascendente e Meio do Céu:** vêm já resolvidos em `sign` e `degree` (além da `longitude`), evitando qualquer cálculo de signo no n8n/LLM. As `cusps` permanecem como longitudes cruas.
 
 > **Validação:** compare o signo e grau do Sol, Lua e Ascendente com o resultado em [astro.com/horoscopes/natal](https://www.astro.com/cgi/chart.cgi). A diferença esperada em modo Moshier é < 1°.
 
