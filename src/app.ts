@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import Fastify, { type FastifyError } from 'fastify';
 import { serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
 import { initEphemeris, closeEphemeris } from './services/ephemeris.js';
