@@ -26,6 +26,9 @@ export const NatalInputSchema = z.object({
   houseSystem: z
     .enum(Object.keys(HOUSE_SYSTEMS) as [keyof typeof HOUSE_SYSTEMS])
     .default('placidus'),
+  // Horário de verão: 'auto' usa a base histórica IANA (recomendado);
+  // 'on'/'off' força quando o usuário sabe que era ou não horário de verão.
+  dst: z.enum(['auto', 'on', 'off']).default('auto'),
 });
 
 export type NatalInput = z.infer<typeof NatalInputSchema>;

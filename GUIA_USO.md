@@ -79,6 +79,35 @@ curl -s -X POST http://localhost:3001/v1/natal \
 | `latitude` | número -90..90 | sim | Latitude da cidade de nascimento |
 | `longitude` | número -180..180 | sim | Longitude da cidade de nascimento |
 | `houseSystem` | enum | não | `placidus` (padrão), `koch`, `whole-sign`, `equal`, `regiomontanus`, `campanus` |
+| `dst` | enum | não | Horário de verão: `auto` (padrão), `on`, `off` — ver seção abaixo |
+
+#### Horário de verão (DST)
+
+A maioria das pessoas não sabe se nasceu durante o horário de verão. **Você não precisa saber:** com `dst: "auto"` (padrão), a API consulta a base histórica IANA pelo `timezone` e pela data e aplica o offset correto automaticamente — inclusive períodos extintos, como o horário de verão brasileiro abolido em 2019.
+
+| Valor | Comportamento |
+|---|---|
+| `auto` | **Recomendado.** Detecta automaticamente pela base histórica do timezone |
+| `on` | Força horário de verão (use só se tiver certeza que era verão/DST) |
+| `off` | Força horário padrão (use só se tiver certeza que não era DST) |
+
+Toda resposta inclui o bloco `timeResolution` indicando o que foi aplicado:
+
+```json
+{
+  "timeResolution": {
+    "utc": "1990-01-15T16:30:00.000Z",
+    "utcOffset": "-02:00",
+    "dstApplied": true,
+    "ambiguous": false,
+    "adjusted": false
+  }
+}
+```
+
+- **`dstApplied`** — se o horário de verão foi aplicado àquela data.
+- **`ambiguous`** — `true` quando a hora caiu na *volta* do horário de verão (o relógio marcou aquele horário duas vezes). O padrão é o horário padrão; force `dst: "on"` se souber que foi a primeira ocorrência.
+- **`adjusted`** — `true` quando a hora caiu no *salto* do início do horário de verão (horário que não existiu no relógio); a hora foi avançada.
 
 **Resposta (exemplo resumido):**
 
@@ -116,11 +145,33 @@ curl -s -X POST http://localhost:3001/v1/natal \
       "orb": 3.2,
       "applying": false
     }
-  ]
+  ],
+  "timeResolution": {
+    "utc": "1990-06-15T17:30:00.000Z",
+    "utcOffset": "-03:00",
+    "dstApplied": false,
+    "ambiguous": false,
+    "adjusted": false
+  }
 }
 ```
 
 > **Validação:** compare o signo e grau do Sol, Lua e Ascendente com o resultado em [astro.com/horoscopes/natal](https://www.astro.com/cgi/chart.cgi). A diferença esperada em modo Moshier é < 1°.
+
+**Forçando o horário de verão** (quando o usuário tem certeza):
+
+```bash
+curl -s -X POST http://localhost:3001/v1/natal \
+  -H "Content-Type: application/json" \
+  -d '{
+    "date": "1990-01-15",
+    "time": "14:30",
+    "timezone": "America/Sao_Paulo",
+    "latitude": -23.5505,
+    "longitude": -46.6333,
+    "dst": "off"
+  }' | jq .timeResolution
+```
 
 ---
 

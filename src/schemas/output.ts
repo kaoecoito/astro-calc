@@ -30,10 +30,20 @@ export const AspectSchema = z.object({
   applying: z.boolean().optional(),
 });
 
+// Metadados de como a hora local foi resolvida para UTC (transparência do horário de verão)
+export const TimeResolutionSchema = z.object({
+  utc: z.string(),
+  utcOffset: z.string(), // ex: "-03:00"
+  dstApplied: z.boolean(), // horário de verão foi aplicado
+  ambiguous: z.boolean(), // hora caiu na sobreposição da volta do horário de verão
+  adjusted: z.boolean(), // hora caiu no salto inexistente do início do horário de verão
+});
+
 export const NatalChartSchema = z.object({
   planets: z.array(PlanetPositionSchema),
   houses: HouseDataSchema,
   aspects: z.array(AspectSchema),
+  timeResolution: TimeResolutionSchema,
 });
 
 export const TransitPlanetPositionSchema = PlanetPositionSchema.extend({
